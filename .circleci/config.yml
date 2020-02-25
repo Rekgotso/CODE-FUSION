@@ -11,3 +11,8 @@ jobs:
       - checkout
       - run:
           command: ./gradlew build
+          
+version: 2.1
+orbs:
+  coveralls: coveralls/coveralls@1.0.4
+
