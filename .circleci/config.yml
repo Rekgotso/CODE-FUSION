@@ -6,8 +6,31 @@ orbs:
 jobs:
   build:
     executor: android/android
+    docker:
+        image: circleci/android:api-28-alpha
+    
+    environment:
+        JVM_OPTS: -Xmx3200m
         
     steps:
       - checkout
+      -restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum "app/build.gradle" }}
       - run:
-          command: ./gradlew build
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+              - ~/.gradle
+          key: jars-{{checksum "build.gradle" }}-{{ checksum "android/build.gradle" }}
+      - run: Run Tests
+        name: Run Tests
+        command: ./gradlew lint test
+        
+        #store test results
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+      - store_tests_results:
+          path: app/build/test-results
+       
