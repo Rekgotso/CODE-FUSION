@@ -33,4 +33,3 @@ jobs:
           destination: reports
       - store_tests_results:
           path: app/build/test-results
-       
