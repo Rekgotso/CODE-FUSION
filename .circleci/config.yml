@@ -22,7 +22,4 @@ jobs:
           destination: reports
       - store_test_results: # for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: app/build/test-results
-          
-orbs:
-  coveralls: coveralls/coveralls@1.0.4
 
